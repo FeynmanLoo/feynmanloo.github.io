@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Feynman&#39;s Blog</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://feynmanloo.github.io/"/>
+  <updated>2017-11-08T10:13:35.477Z</updated>
+  <id>http://feynmanloo.github.io/</id>
+  
+  <author>
+    <name>Feynman Loo</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>使用python抓取汽车之家车型数据</title>
+    <link href="http://feynmanloo.github.io/2017/11/08/%E4%BD%BF%E7%94%A8python%E6%8A%93%E5%8F%96%E6%B1%BD%E8%BD%A6%E4%B9%8B%E5%AE%B6%E8%BD%A6%E5%9E%8B%E6%95%B0%E6%8D%AE/"/>
+    <id>http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/</id>
+    <published>2017-11-08T10:05:17.000Z</published>
+    <updated>2017-11-08T10:13:35.477Z</updated>
+    
+    <content type="html"><![CDATA[<p>Talk is cheap, show you my code !<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> pymysql</div><div class="line"></div><div class="line"></div><div class="line">HOSTNAME = <span class="string">'127.0.0.1'</span></div><div class="line">USERNAME = <span class="string">'root'</span></div><div class="line">PASSWORD = <span class="string">'zyndev'</span></div><div class="line">DATABASE = <span class="string">'zyndev_new'</span></div><div class="line"></div><div class="line"></div><div class="line">brand = <span class="string">'http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=1'</span></div><div class="line">series = <span class="string">'http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=3&amp;value=&#123;&#125;'</span></div><div class="line">model = <span class="string">'http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=5&amp;value=&#123;&#125;'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">obtain_brand_info</span><span class="params">()</span>:</span></div><div class="line">    request_brand = requests.get(brand)</div><div class="line">    <span class="keyword">if</span> request_brand.status_code == <span class="number">200</span>:</div><div class="line">        request_brand.close()</div><div class="line">        brand_json = request_brand.json()</div><div class="line">        <span class="keyword">if</span> brand_json[<span class="string">'returncode'</span>] == <span class="number">0</span>:  <span class="comment"># 成功</span></div><div class="line">            brand_list = brand_json[<span class="string">'result'</span>][<span class="string">'branditems'</span>]</div><div class="line">            conn = pymysql.connect(HOSTNAME, USERNAME, PASSWORD, DATABASE, charset=<span class="string">"utf8"</span>)</div><div class="line">            cur = conn.cursor()</div><div class="line">            args = []</div><div class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> brand_list:  <span class="comment"># 存入数据库 将 dict 转为 list</span></div><div class="line">                sub_arg = (item[<span class="string">'id'</span>], item[<span class="string">'name'</span>], item[<span class="string">'bfirstletter'</span>])</div><div class="line">                args.append(sub_arg)</div><div class="line">            print(args)</div><div class="line">            <span class="comment"># rowcount = cur.executemany('INSERT INTO auto_home_car_brand(brandid,name,bfirstletter) values(%s,%s,%s)', args)</span></div><div class="line">            <span class="comment"># conn.commit()</span></div><div class="line">            <span class="comment"># print(f"插入品牌:\n共&#123;len(brand_dict)&#125;\n成功插入&#123;rowcount&#125;条记录\n插入失败&#123;len(brand_dict) - rowcount&#125;条")</span></div><div class="line">            <span class="comment"># cur.close()</span></div><div class="line">            <span class="comment"># conn.close()</span></div><div class="line">            <span class="keyword">return</span> brand_list</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">raise</span> Exception(<span class="string">"请求失败"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">obtain_series</span><span class="params">(brand_list)</span>:</span></div><div class="line">    <span class="keyword">for</span> brand_info <span class="keyword">in</span> brand_list:</div><div class="line">        request_series = requests.get(series.format(brand_info[<span class="string">'id'</span>]))</div><div class="line">        <span class="keyword">if</span> request_series.status_code == <span class="number">200</span>:</div><div class="line">            request_series.close()</div><div class="line">            series_json = request_series.json()</div><div class="line">            <span class="keyword">if</span> series_json[<span class="string">'returncode'</span>] == <span class="number">0</span>:  <span class="comment"># 成功</span></div><div class="line">                factory_list = series_json[<span class="string">'result'</span>][<span class="string">'factoryitems'</span>]</div><div class="line">                conn = pymysql.connect(HOSTNAME, USERNAME, PASSWORD, DATABASE, charset=<span class="string">"utf8"</span>)</div><div class="line">                cur = conn.cursor()</div><div class="line">                args = []</div><div class="line">                series_count = <span class="number">0</span></div><div class="line">                <span class="keyword">for</span> factory_item <span class="keyword">in</span> factory_list:</div><div class="line">                    factory_id = factory_item[<span class="string">'id'</span>]</div><div class="line">                    factory_name = factory_item[<span class="string">'name'</span>]</div><div class="line">                    series_items = factory_item[<span class="string">'seriesitems'</span>]</div><div class="line">                    <span class="keyword">for</span> series_item <span class="keyword">in</span> series_items:</div><div class="line">                        series_count = series_count + <span class="number">1</span></div><div class="line">                        sub_arg = (brand_info[<span class="string">'id'</span>], factory_id, factory_name, series_item[<span class="string">'id'</span>], series_item[<span class="string">'name'</span>],</div><div class="line">                                   series_item[<span class="string">'seriesstate'</span>], series_item[<span class="string">'seriesorder'</span>])</div><div class="line">                        args.append(sub_arg)</div><div class="line"></div><div class="line">                rowcount = cur.executemany(<span class="string">'''INSERT INTO auto_home_car_series(brand_id, factory_id, `factory_name`, </span></div><div class="line"><span class="string">                                        `series_id`, `series_name`, `series_state`,`series_order`)</span></div><div class="line"><span class="string">                                          values(%s, %s, %s, %s, %s, %s, %s)'''</span>,args)</div><div class="line">                conn.commit()</div><div class="line">                print(<span class="string">f"插入车系:\n共<span class="subst">&#123;series_count&#125;</span>\n成功插入<span class="subst">&#123;rowcount&#125;</span>条记录\n插入失败<span class="subst">&#123;series_count - rowcount&#125;</span>条"</span>)</div><div class="line">                cur.close()</div><div class="line">                conn.close()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">obtain_model</span><span class="params">()</span>:</span></div><div class="line">    conn = pymysql.connect(HOSTNAME, USERNAME, PASSWORD, DATABASE, charset=<span class="string">"utf8"</span>)</div><div class="line">    cur = conn.cursor()</div><div class="line">    cur.execute(<span class="string">"select series_id from auto_home_car_series"</span>)</div><div class="line">    series_list = cur.fetchall()</div><div class="line"></div><div class="line">    <span class="keyword">for</span> series <span class="keyword">in</span> series_list:</div><div class="line">        request_model = requests.get(model.format(series[<span class="number">0</span>]))</div><div class="line">        <span class="keyword">if</span> request_model.status_code == <span class="number">200</span>:</div><div class="line">            model_json = request_model.json()</div><div class="line">            request_model.close()</div><div class="line">            <span class="keyword">if</span> model_json[<span class="string">'returncode'</span>] == <span class="number">0</span>:  <span class="comment"># 成功</span></div><div class="line">                year_items = model_json[<span class="string">'result'</span>][<span class="string">'yearitems'</span>]</div><div class="line">                conn = pymysql.connect(HOSTNAME, USERNAME, PASSWORD, DATABASE, charset=<span class="string">"utf8"</span>)</div><div class="line">                cur = conn.cursor()</div><div class="line">                args = []</div><div class="line">                model_count = <span class="number">0</span></div><div class="line">                <span class="keyword">for</span> year_item <span class="keyword">in</span> year_items:</div><div class="line">                    <span class="keyword">for</span> spec_item <span class="keyword">in</span> year_item[<span class="string">'specitems'</span>]:</div><div class="line">                        model_count = model_count + <span class="number">1</span></div><div class="line">                        sub_args = (series[<span class="number">0</span>], year_item[<span class="string">'id'</span>], year_item[<span class="string">'name'</span>], spec_item[<span class="string">'id'</span>], spec_item[<span class="string">'name'</span>],</div><div class="line">                                    spec_item[<span class="string">'state'</span>], spec_item[<span class="string">'minprice'</span>], spec_item[<span class="string">'maxprice'</span>])</div><div class="line">                        args.append(sub_args)</div><div class="line"></div><div class="line">                rowcount = cur.executemany(<span class="string">'''INSERT INTO auto_home_car_model(</span></div><div class="line"><span class="string">                        `series_id`, `year_id`, `year_name`, `model_id`,</span></div><div class="line"><span class="string">                        `model_name`, `model_state`, `min_price`, `max_price`)</span></div><div class="line"><span class="string">                    values(%s, %s, %s, %s, %s, %s, %s, %s)'''</span>, args)</div><div class="line">                conn.commit()</div><div class="line">                print(<span class="string">f"插入车型:\n共<span class="subst">&#123;model_count&#125;</span>\n成功插入<span class="subst">&#123;rowcount&#125;</span>条记录\n插入失败<span class="subst">&#123;model_count - rowcount&#125;</span>条"</span>)</div><div class="line">                cur.close()</div><div class="line">                conn.close()</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment">#brand_list = obtain_brand_info()</span></div><div class="line">    <span class="comment">#obtain_series(brand_list)</span></div><div class="line">    obtain_model()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="string">'__main__'</span> == __name__:</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Talk is cheap, show you my code !&lt;br&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div cl
+    
+    </summary>
+    
+    
+      <category term="爬虫" scheme="http://feynmanloo.github.io/tags/%E7%88%AC%E8%99%AB/"/>
+    
+      <category term="汽车之家" scheme="http://feynmanloo.github.io/tags/%E6%B1%BD%E8%BD%A6%E4%B9%8B%E5%AE%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>软件版本命名规范</title>
+    <link href="http://feynmanloo.github.io/2017/09/30/%E8%BD%AF%E4%BB%B6%E7%89%88%E6%9C%AC%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/"/>
+    <id>http://feynmanloo.github.io/2017/09/30/软件版本命名规范/</id>
+    <published>2017-09-30T04:05:17.000Z</published>
+    <updated>2017-09-30T07:10:22.380Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个正规的软件产品少不了要有规范的命名，一个好的软件产品一定要有个规范的版本号，而在命名版本号时有一些约定俗成的规则，下面我来简单介绍下。</p>
+<h4 id="版本命名规范"><a href="#版本命名规范" class="headerlink" title="版本命名规范"></a>版本命名规范</h4><p>软件版本号有四部分组成，第一部分为主版本号，第二部分为次版本号，第三部分为修订版<br>本号，第四部分为日期版本号加希腊字母版本号，希腊字母版本号共有五种，分别为base、alpha、beta 、RC 、 release</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/ba9b196e-11c1-437f-8eeb-676f5a9c7a5f.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="软件版本阶段说明"><a href="#软件版本阶段说明" class="headerlink" title="软件版本阶段说明"></a>软件版本阶段说明</h4><ul>
+<li>Base：此版本表示该软件仅仅是一个假页面链接，通常包括所有的功能和页面布局，但是页面中的功能都没有做完整的实现，只是做为整体网站的一个基础架构。</li>
+<li>Alpha ：软件的初级版本，表示该软件在此阶段以实现软件功能为主，通常只在软件开发者内部交流，一般而言，该版本软件的Bug较多，需要继续修改，是测试版本。测试    人员提交Bug经开发人员修改确认之后，发布到测试网址让测试人员测试，此时可将软件版本标注为alpha版。</li>
+<li>Beta ：该版本相对于Alpha 版已经有了很大的进步，消除了严重错误，但还需要经过多次测试来进一步消除，此版本主要的修改对象是软件的UI。修改的的Bug 经测试人员测试确认后可发布到外网上，此时可将软件版本标注为 beta版。<br>RC ：该版本已经相当成熟了，基本上不存在导致错误的Bug，与即将发行的正式版本相差 无几。<br>Release：该版本意味“最终版本”，在前面版本的一系列测试版之后，终归会有一个正式的版本，是最终交付用户使用的一个版本。该版本有时也称标准版。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/779bbacb-c83b-4beb-9c72-6f4404c92575.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="版本号修改规则"><a href="#版本号修改规则" class="headerlink" title="版本号修改规则"></a>版本号修改规则</h4><ol>
+<li>主版本号：当功能模块有较大的变动，比如增加模块或是整体架构发生变化。此版本号由项目决定是否修改。</li>
+<li>次版本号：相对于主版本号而言，次版本号的升级对应的只是局部的变动，但该局部的变动造成程序和以前版本不能兼容，或者对该程序以前的协作关系产生了破坏，或者 是功能上有大的改进或增强。此版本号由项目决定是否修改。</li>
+<li>修订版本号：一般是Bug 的修复或是一些小的变动或是一些功能的扩充，要经常发布修订版，修复一个严重 Bug 即可发布一个修订版。此版本号由项目经理    决定是否修改。</li>
+<li>日期版本号：用于记录修改项目的当前日期，每天对项目的修改都需要更改日期版本  号。此版本号由开发人员决定是否修改。</li>
+<li>希腊字母版本号：此版本号用于标注当前版本的软件处于哪个开发阶段，当软件进入  到另一个阶段时需要修改此版本号。此版本号由项目决定是否修改。</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/6408e772-8bd1-4ba1-9b7e-dfac16bbb097.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="版本发布周期"><a href="#版本发布周期" class="headerlink" title="版本发布周期"></a>版本发布周期</h4><p>非紧急情况：首先由测试人员测试并提交Bug，其次开发人员会尽量在当天修复Bug并在第二天发布该版本的alpha版，然后由测试人员测试验证关闭Bug之后在第三天会发布该版本的 beta 版。</p>
+<p>紧急情况：如果Bug比较紧急可跳过一般流程，由开发人员尽快修复Bug，测试确认之后直接发布该版本的 beta版。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/90e81c9a-9a8c-440c-a117-0e97037562de.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="版本号修改举例说明"><a href="#版本号修改举例说明" class="headerlink" title="版本号修改举例说明"></a>版本号修改举例说明</h4><p>如此时版本号为：1.0.0.0321_alpha ，此时为内部测试阶段</p>
+<ol>
+<li>开发人员修复了测试人员提交的bug并经测试人员测试验证关闭bug之后，发布到外网时，此时就进入了软件的下一个阶段，版本号可改为：1.0.0.0321_beta ，如当前日期跟上一个版本号的日期不一样，版本号可改为：1.0.0.0322_beta。</li>
+<li>如果修复了一些重大Bug 并按照流程发布到外网时就可发布一个修订版，如1.0.1.0322_beta，日期为发布的当前日期。</li>
+<li>如果对软件进行了一些功能上的改进或增强，进行了一些局部变动的时候要修改次版本号，如：1.1.0.0322_beta（上一级有变动时，下级要归零）。</li>
+<li>当功能模块有较大变动，增加模块或整体架构发生变化时要修改主版本号，如新增加了退款功能，则版本号要改为：2.0.0.0322_beta 。<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/d8eae9e1-0825-4408-bdea-5e4a69be4da5.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+</ol>
+<p>英文原文：<a href="https://jingyan.baidu.com/article/8cdccae9659f5c315413cde6.html" target="_blank" rel="external">https://jingyan.baidu.com/article/8cdccae9659f5c315413cde6.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;一个正规的软件产品少不了要有规范的命名，一个好的软件产品一定要有个规范的版本号，而在命名版本号时有一些约定俗成的规则，下面我来简单介绍下。&lt;/p&gt;
+&lt;h4 id=&quot;版本命名规范&quot;&gt;&lt;a href=&quot;#版本命名规范&quot; class=&quot;headerlink&quot; title=&quot;版本命
+    
+    </summary>
+    
+    
+      <category term="版本号" scheme="http://feynmanloo.github.io/tags/%E7%89%88%E6%9C%AC%E5%8F%B7/"/>
+    
+      <category term="规范" scheme="http://feynmanloo.github.io/tags/%E8%A7%84%E8%8C%83/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>开源许可证GPL、BSD、MIT、Mozilla、Apache和LGPL的区别</title>
+    <link href="http://feynmanloo.github.io/2017/09/18/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E8%AF%81GPL%E3%80%81BSD%E3%80%81MIT%E3%80%81Mozilla%E3%80%81Apache%E5%92%8CLGPL%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://feynmanloo.github.io/2017/09/18/开源许可证GPL、BSD、MIT、Mozilla、Apache和LGPL的区别/</id>
+    <published>2017-09-18T04:05:17.000Z</published>
+    <updated>2017-09-18T06:17:22.687Z</updated>
+    
+    <content type="html"><![CDATA[<p>首先借用有心人士的一张相当直观清晰的图来划分各种协议：开源许可证GPL、BSD、MIT、Mozilla、Apache和LGPL的区别</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://img.blog.csdn.net/20140811173721234?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvdGVzdGNzX2Ru/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="image" title="">
+                </div>
+                <div class="image-caption">image</div>
+            </figure>
+<p>以下是上述协议的简单介绍：</p>
+<h4 id="BSD开源协议"><a href="#BSD开源协议" class="headerlink" title="BSD开源协议"></a>BSD开源协议</h4><p>BSD开源协议是一个给于使用者很大自由的协议。基本上使用者可以”为所欲为”,可以自由的使用，修改源代码，也可以将修改后的代码作为开源或者专有软件再发布。</p>
+<p>但”为所欲为”的前提当你发布使用了BSD协议的代码，或则以BSD协议代码为基础做二次开发自己的产品时，需要满足三个条件：</p>
+<pre><code>如果再发布的产品中包含源代码，则在源代码中必须带有原来代码中的BSD协议。
+如果再发布的只是二进制类库/软件，则需要在类库/软件的文档和版权声明中包含原来代码中的BSD协议。
+不可以用开源代码的作者/机构名字和原来产品的名字做市场推广。
+</code></pre><p>BSD 代码鼓励代码共享，但需要尊重代码作者的著作权。BSD由于允许使用者修改和重新发布代码，也允许使用或在BSD代码上开发商业软件发布和销售，因此是对商业集成很友好的协议。而很多的公司企业在选用开源产品的时候都首选BSD协议，因为可以完全控制这些第三方的代码，在必要的时候可以修改或者二次开发。</p>
+<h4 id="Apache-Licence-2-0"><a href="#Apache-Licence-2-0" class="headerlink" title="Apache Licence 2.0"></a>Apache Licence 2.0</h4><p>Apache Licence是著名的非盈利开源组织Apache采用的协议。该协议和BSD类似，同样鼓励代码共享和尊重原作者的著作权，同样允许代码修改，再发布（作为开源或商业软件）。需要满足的条件也和BSD类似：</p>
+<pre><code>需要给代码的用户一份Apache Licence
+如果你修改了代码，需要再被修改的文件中说明。
+在延伸的代码中（修改和有源代码衍生的代码中）需要带有原来代码中的协议，商标，专利声明和其他原来作者规定需要包含的说明。
+如果再发布的产品中包含一个Notice文件，则在Notice文件中需要带有Apache Licence。你可以在Notice中增加自己的许可，但不可以表现为对Apache Licence构成更改。
+</code></pre><p>Apache Licence也是对商业应用友好的许可。使用者也可以在需要的时候修改代码来满足需要并作为开源或商业产品发布/销售。</p>
+<h4 id="GPL"><a href="#GPL" class="headerlink" title="GPL"></a>GPL</h4><p>我们很熟悉的Linux就是采用了GPL。GPL协议和BSD, Apache Licence等鼓励代码重用的许可很不一样。GPL的出发点是代码的开源/免费使用和引用/修改/衍生代码的开源/免费使用，但不允许修改后和衍生的代码做为闭源的商业软件发布和销售。这也就是为什么我们能用免费的各种linux，包括商业公司的linux和linux上各种各样的由个人，组织，以及商业软件公司开发的免费软件了。</p>
+<p>GPL协议的主要内容是只要在一个软件中使用(”使用”指类库引用，修改后的代码或者衍生代码)GPL 协议的产品，则该软件产品必须也采用GPL协议，既必须也是开源和免费。这就是所谓的”传染性”。GPL协议的产品作为一个单独的产品使用没有任何问题，还可以享受免费的优势。</p>
+<p>由于GPL严格要求使用了GPL类库的软件产品必须使用GPL协议，对于使用GPL协议的开源代码，商业软件或者对代码有保密要求的部门就不适合集成/采用作为类库和二次开发的基础。</p>
+<p>其它细节如再发布的时候需要伴随GPL协议等和BSD/Apache等类似。</p>
+<h4 id="LGPL"><a href="#LGPL" class="headerlink" title="LGPL"></a>LGPL</h4><p>LGPL是GPL的一个为主要为类库使用设计的开源协议。和GPL要求任何使用/修改/衍生之GPL类库的的软件必须采用GPL协议不同。LGPL 允许商业软件通过类库引用(link)方式使用LGPL类库而不需要开源商业软件的代码。这使得采用LGPL协议的开源代码可以被商业软件作为类库引用并发布和销售。</p>
+<p>但是如果修改LGPL协议的代码或者衍生，则所有修改的代码，涉及修改部分的额外代码和衍生的代码都必须采用LGPL协议。因此LGPL协议的开源代码很适合作为第三方类库被商业软件引用，但不适合希望以LGPL协议代码为基础，通过修改和衍生的方式做二次开发的商业软件采用。</p>
+<p>GPL/LGPL都保障原作者的知识产权，避免有人利用开源代码复制并开发类似的产品</p>
+<h4 id="MIT"><a href="#MIT" class="headerlink" title="MIT"></a>MIT</h4><p>MIT是和BSD一样宽范的许可协议,作者只想保留版权,而无任何其他了限制.也就是说,你必须在你的发行版里包含原许可协议的声明,无论你是以二进制发布的还是以源代码发布的.</p>
+<h4 id="MPL"><a href="#MPL" class="headerlink" title="MPL"></a>MPL</h4><p>MPL是The Mozilla Public License的简写，是1998年初Netscape的 Mozilla小组为其开源软件项目设计的软件许可证。MPL许可证出现的最重要原因就是，Netscape公司认为GPL许可证没有很好地平衡开发者对源代码的需求和他们利用源代码获得的利益。同著名的GPL许可证和BSD许可证相比，MPL在许多权利与义务的约定方面与它们相同（因为都是符合OSIA 认定的开源软件许可证）。但是，相比而言MPL还有以下几个显著的不同之处:</p>
+<ul>
+<li>PL虽然要求对于经MPL许可证发布的源代码的修改也要以MPL许可证的方式再许可出来，以保证其他人可以在MPL的条款下共享源代码。但是，在MPL 许可证中对“发布”的定义是“以源代码方式发布的文件”，这就意味着MPL允许一个企业在自己已有的源代码库上加一个接口，除了接口程序的源代码以MPL 许可证的形式对外许可外，源代码库中的源代码就可以不用MPL许可证的方式强制对外许可。这些，就为借鉴别人的源代码用做自己商业软件开发的行为留了一个豁口。</li>
+<li>PL许可证第三条第7款中允许被许可人将经过MPL许可证获得的源代码同自己其他类型的代码混合得到自己的软件程序。</li>
+<li>对软件专利的态度，MPL许可证不像GPL许可证那样明确表示反对软件专利，但是却明确要求源代码的提供者不能提供已经受专利保护的源代码（除非他本人是专利权人，并书面向公众免费许可这些源代码），也不能在将这些源代码以开放源代码许可证形式许可后再去申请与这些源代码有关的专利。</li>
+<li>对源代码的定义<br>而在MPL（1.1版本）许可证中，对源代码的定义是:“源代码指的是对作品进行修改最优先择取的形式，它包括:所有模块的所有源程序，加上有关的接口的定义，加上控制可执行作品的安装和编译的‘原本’（原文为‘Script’），或者不是与初始源代码显著不同的源代码就是被源代码贡献者选择的从公共领域可以得到的程序代码。”</li>
+<li>PL许可证第3条有专门的一款是关于对源代码修改进行描述的规定，就是要求所有再发布者都得有一个专门的文件就对源代码程序修改的时间和修改的方式有描述。</li>
+</ul>
+<p>英文原文：<a href="http://www.mozilla.org/MPL/MPL-1.1.html" target="_blank" rel="external">http://www.mozilla.org/MPL/MPL-1.1.html</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;首先借用有心人士的一张相当直观清晰的图来划分各种协议：开源许可证GPL、BSD、MIT、Mozilla、Apache和LGPL的区别&lt;/p&gt;
+&lt;figure class=&quot;image-bubble&quot;&gt;
+                &lt;div class=&quot;img-ligh
+    
+    </summary>
+    
+    
+      <category term="开源许可证" scheme="http://feynmanloo.github.io/tags/%E5%BC%80%E6%BA%90%E8%AE%B8%E5%8F%AF%E8%AF%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树莓派+SSH反向连接=无公网IP也能访问本地PI</title>
+    <link href="http://feynmanloo.github.io/2017/09/03/%E6%A0%91%E8%8E%93%E6%B4%BE-SSH%E5%8F%8D%E5%90%91%E8%BF%9E%E6%8E%A5-%E6%97%A0%E5%85%AC%E7%BD%91IP%E4%B9%9F%E8%83%BD%E8%AE%BF%E9%97%AE%E6%9C%AC%E5%9C%B0PI/"/>
+    <id>http://feynmanloo.github.io/2017/09/03/树莓派-SSH反向连接-无公网IP也能访问本地PI/</id>
+    <published>2017-09-03T11:37:17.000Z</published>
+    <updated>2017-09-18T03:54:36.328Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="SSH简介"><a href="#SSH简介" class="headerlink" title="SSH简介"></a>SSH简介</h1><p>接触Linux恐怕对SSH再熟悉不过了，还有scp，sftp各种方便的功能，一般的使用都需要ip:port（如果不是默认22的话），但有些情况比较特殊，就是想连接一台内网主机（比如公司内网，当然你肯定做不了Port Forwarding，除非你想在公司防火墙上拆个洞）。稍懂一点网络的童鞋会明白，Internet上去主动连接一台内网是不可能的，一般的解决方案分两种，一种是端口映射（Port Forwarding），将内网主机的某个端口Open出防火墙，相当于两个外网主机通信；另一种是内网主机主动连接到外网主机，又被称作反向连接（Reverse Connection），这样NAT路由/防火墙就会在内网主机和外网主机之间建立映射，自然可以相互通信了。但是，这种映射是NAT路由自动维持的，不会持续下去，如果连接断开或者网络不稳定都会导致通信失败，这时内网主机需要再次主动连接到外网主机，建立连接。</p>
+<h1 id="理论的介绍完了，下面实际操作："><a href="#理论的介绍完了，下面实际操作：" class="headerlink" title="理论的介绍完了，下面实际操作："></a>理论的介绍完了，下面实际操作：</h1><p>A要控制B</p>
+<p>A主机：外网，ip：123.123.123.123，sshd端口：2221</p>
+<p>B主机：内网，sshd端口：2223</p>
+<p>无论是外网主机A，还是内网主机B都需要跑ssh daemon</p>
+<ol>
+<li>首先在B上执行<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> ssh -NfR 1234:localhost:2223 user1@123.123.123.123 -p2221</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这句话的意思是将A主机的1234端口和B主机的2223端口绑定，相当于远程端口映射（Remote Port Forwarding）。</p>
+<p>这里每次需要输入A主机user1的登陆密码，后面会讲到解决办法。</p>
+<ol>
+<li><p>这时在A主机上sshd会listen本地1234端口</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> ss -ant</span></div><div class="line"></div><div class="line">State      Recv-Q Send-Q        Local Address:Port          Peer Address:Port</div><div class="line">LISTEN     0      128               127.0.0.1:1234                     *:*</div></pre></td></tr></table></figure>
+</li>
+<li><p>像平时一样连接到A主机的1234端口就可以控制内网B主机了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> ssh localhost -p1234</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="解决SSH连接不稳定的问题"><a href="#解决SSH连接不稳定的问题" class="headerlink" title="解决SSH连接不稳定的问题"></a>解决SSH连接不稳定的问题</h1><ol>
+<li><p>一开始提到，这种反向连接（Reverse Connection）不稳定，可能随时断开，需要内网主机B再次向外网A发起连接，这时需要个“朋友”帮你在内网B主机执行这条命令。它就是Autossh。<br>在此之前还要解决之前的一个问题，那就是每次内网主机B连接外网主机A时都需要输入密码，这个问题ssh本身是提供另外一种验证方式——通过密钥验证用户身份，实现自动登录。</p>
+</li>
+<li><p>在内网B主机上生产公钥和私钥</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> ssh-keygen</span></div><div class="line">...(一直按Enter，最后在~/.ssh/下生成密钥)</div><div class="line"><span class="meta">$</span><span class="bash"> ls ~/.ssh/</span></div><div class="line">id_rsa id_rsa.pub known_hosts</div></pre></td></tr></table></figure>
+</li>
+<li><p>复制B主机上生成的id_rsa.pub公钥到外网A主机上，并将内容加入到~/.ssh/authorized_keys中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> cat id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>试下，内网B主机连接外网A主机，就不再输入密码验证了</p>
+<p>补充：今天了解到ssh-copy-id这个命令，上面这个操作就变的简单了<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> ssh-copy-id user1@123.123.123.123</span></div></pre></td></tr></table></figure></p>
+<ol>
+<li>再来看看Autossh的用法<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="meta">$</span><span class="bash"> autossh -M 5678 -NR 1234:localhost:2223 user1@123.123.123.123 -p2221</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>比之前的命令添加的一个-M 5678参数，负责通过5678端口监视连接状态，连接有问题时就会自动重连，去掉了一个-f参数，因为autossh本身就会在background运行。</p>
+<h1 id="终极方案：当重启内网B主机，谁来自动Autossh呢，加入daemon吧"><a href="#终极方案：当重启内网B主机，谁来自动Autossh呢，加入daemon吧" class="headerlink" title="终极方案：当重启内网B主机，谁来自动Autossh呢，加入daemon吧"></a>终极方案：当重启内网B主机，谁来自动Autossh呢，加入daemon吧</h1><p>以daemon方式执行，相当于root去执行autossh, ssh，这时刚才普通用户目录下的.ssh/authorized_keys文件会不起效。有两种办法解决，一种是用autossh的参数指定.ssh路径；另外一种是以普通用户身份执行daemon，下面是第二种方式。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/bin/su -c '/usr/bin/autossh -M 5678 -NR 1234:localhost:2223 user1@123.123.123.123 -p2221' - user1</div></pre></td></tr></table></figure></p>
+<p>autossh还有很多参数，用来设置重连间隔等等。</p>
+<p>将上面命令放入下面各启动方式中，根据自己系统自己配置：</p>
+<p>SysV：/etc/inid.d/autossh</p>
+<p>Upstart: /etc/init/autossh.conf</p>
+<p>systemd: /usr/lib/systemd/system/autossh.service</p>
+<h1 id="P-S"><a href="#P-S" class="headerlink" title="P.S."></a>P.S.</h1><p>1.家里是ADSL的话，用DDNS，解决ip问题</p>
+<p>2.外网有路由的可设下端口映射</p>
+<p>3.虽然有密钥和密码保护，但还请小心使用</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;SSH简介&quot;&gt;&lt;a href=&quot;#SSH简介&quot; class=&quot;headerlink&quot; title=&quot;SSH简介&quot;&gt;&lt;/a&gt;SSH简介&lt;/h1&gt;&lt;p&gt;接触Linux恐怕对SSH再熟悉不过了，还有scp，sftp各种方便的功能，一般的使用都需要ip:port（如果不是
+    
+    </summary>
+    
+    
+      <category term="树莓派" scheme="http://feynmanloo.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+      <category term="SSH" scheme="http://feynmanloo.github.io/tags/SSH/"/>
+    
+      <category term="autossh" scheme="http://feynmanloo.github.io/tags/autossh/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>树莓派+win10iot跑NetCore2网站</title>
+    <link href="http://feynmanloo.github.io/2017/08/29/%E6%A0%91%E8%8E%93%E6%B4%BE+win10iot%E8%B7%91NetCore2%E7%BD%91%E7%AB%99/"/>
+    <id>http://feynmanloo.github.io/2017/08/29/树莓派+win10iot跑NetCore2网站/</id>
+    <published>2017-08-29T02:06:02.000Z</published>
+    <updated>2017-09-18T03:54:36.327Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h1><ol>
+<li>一个树莓派刷上最新的Win10 iot 15063系统</li>
+<li>一个NetCore2的网站，能在PC上正常运行就可以了</li>
+</ol>
+<h1 id="网站发布"><a href="#网站发布" class="headerlink" title="网站发布"></a>网站发布</h1><p>运行指令<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dotnet publish -c release -r win-arm</div></pre></td></tr></table></figure></p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://blog.lishewen.com/image.axd?picture=/d1.png" alt="image" title="">
+                </div>
+                <div class="image-caption">image</div>
+            </figure>
+<p>然后把红线部分的内容复制到树莓派上</p>
+<p>这里可以通过文件共享复制<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\\192.168.99.147\c$\</div></pre></td></tr></table></figure></p>
+<p>PS:192.168.99.147是我树莓派的ip</p>
+<p>然后登录到树莓派的PowerShell(可通过 Iot Dashboard 上的 我的设备 右键 找到)</p>
+<p>运行指令，开放防火墙端口<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netsh advfirewall firewall add rule name="NetCore2 APP" dir=in action=allow protocol=TCP localport=5001</div></pre></td></tr></table></figure></p>
+<p>默认端口是5000，我这里项目中修改成5001</p>
+<p>然后运行<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd C:\Web</div><div class="line">.\WeChat.exe</div></pre></td></tr></table></figure></p>
+<p>WeChat是我的项目名，需要自行替换成自己的</p>
+<h1 id="最终效果"><a href="#最终效果" class="headerlink" title="最终效果"></a>最终效果</h1><figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://blog.lishewen.com/image.axd?picture=/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20170829094902.png" alt="image" title="">
+                </div>
+                <div class="image-caption">image</div>
+            </figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;前期准备&quot;&gt;&lt;a href=&quot;#前期准备&quot; class=&quot;headerlink&quot; title=&quot;前期准备&quot;&gt;&lt;/a&gt;前期准备&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;一个树莓派刷上最新的Win10 iot 15063系统&lt;/li&gt;
+&lt;li&gt;一个NetCore2的网站，能在PC上
+    
+    </summary>
+    
+    
+      <category term="树莓派" scheme="http://feynmanloo.github.io/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+      <category term="Win10 iot" scheme="http://feynmanloo.github.io/tags/Win10-iot/"/>
+    
+      <category term="NetCore2" scheme="http://feynmanloo.github.io/tags/NetCore2/"/>
+    
+      <category term="网站" scheme="http://feynmanloo.github.io/tags/%E7%BD%91%E7%AB%99/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://feynmanloo.github.io/2017/08/28/hello-world/"/>
+    <id>http://feynmanloo.github.io/2017/08/28/hello-world/</id>
+    <published>2017-08-28T02:06:02.000Z</published>
+    <updated>2017-09-18T03:54:36.327Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>

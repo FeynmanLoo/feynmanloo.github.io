@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-105310567-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>使用python抓取汽车之家车型数据 | Feynman&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="爬虫,汽车之家">
+    <meta name="description" content="Talk is cheap, show you my code !12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788">
+<meta name="keywords" content="爬虫,汽车之家">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用python抓取汽车之家车型数据">
+<meta property="og:url" content="http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/index.html">
+<meta property="og:site_name" content="Feynman&#39;s Blog">
+<meta property="og:description" content="Talk is cheap, show you my code !12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788">
+<meta property="og:updated_time" content="2017-11-08T10:13:35.477Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用python抓取汽车之家车型数据">
+<meta name="twitter:description" content="Talk is cheap, show you my code !12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788">
+    
+        <link rel="alternate" type="application/atom+xml" title="Feynman&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Feynman Loo</h5>
+          <a href="mailto:feynman0919@gmail.com" title="feynman0919@gmail.com" class="mail">feynman0919@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/FeynmanLoo" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">使用python抓取汽车之家车型数据</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜尋">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">使用python抓取汽车之家车型数据</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-11-08T10:05:17.000Z" itemprop="datePublished" class="page-time">
+  2017-11-08
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-使用python抓取汽车之家车型数据"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">使用python抓取汽车之家车型数据</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-11-08 18:05:17" datetime="2017-11-08T10:05:17.000Z"  itemprop="datePublished">2017-11-08</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>Talk is cheap, show you my code !<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> pymysql</div><div class="line"></div><div class="line"></div><div class="line">HOSTNAME = <span class="string">'127.0.0.1'</span></div><div class="line">USERNAME = <span class="string">'root'</span></div><div class="line">PASSWORD = <span class="string">'zyndev'</span></div><div class="line">DATABASE = <span class="string">'zyndev_new'</span></div><div class="line"></div><div class="line"></div><div class="line">brand = <span class="string">'http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=1'</span></div><div class="line">series = <span class="string">'http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=3&amp;value=&#123;&#125;'</span></div><div class="line">model = <span class="string">'http://www.autohome.com.cn/ashx/AjaxIndexCarFind.ashx?type=5&amp;value=&#123;&#125;'</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">obtain_brand_info</span><span class="params">()</span>:</span></div><div class="line">    request_brand = requests.get(brand)</div><div class="line">    <span class="keyword">if</span> request_brand.status_code == <span class="number">200</span>:</div><div class="line">        request_brand.close()</div><div class="line">        brand_json = request_brand.json()</div><div class="line">        <span class="keyword">if</span> brand_json[<span class="string">'returncode'</span>] == <span class="number">0</span>:  <span class="comment"># 成功</span></div><div class="line">            brand_list = brand_json[<span class="string">'result'</span>][<span class="string">'branditems'</span>]</div><div class="line">            conn = pymysql.connect(HOSTNAME, USERNAME, PASSWORD, DATABASE, charset=<span class="string">"utf8"</span>)</div><div class="line">            cur = conn.cursor()</div><div class="line">            args = []</div><div class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> brand_list:  <span class="comment"># 存入数据库 将 dict 转为 list</span></div><div class="line">                sub_arg = (item[<span class="string">'id'</span>], item[<span class="string">'name'</span>], item[<span class="string">'bfirstletter'</span>])</div><div class="line">                args.append(sub_arg)</div><div class="line">            print(args)</div><div class="line">            <span class="comment"># rowcount = cur.executemany('INSERT INTO auto_home_car_brand(brandid,name,bfirstletter) values(%s,%s,%s)', args)</span></div><div class="line">            <span class="comment"># conn.commit()</span></div><div class="line">            <span class="comment"># print(f"插入品牌:\n共&#123;len(brand_dict)&#125;\n成功插入&#123;rowcount&#125;条记录\n插入失败&#123;len(brand_dict) - rowcount&#125;条")</span></div><div class="line">            <span class="comment"># cur.close()</span></div><div class="line">            <span class="comment"># conn.close()</span></div><div class="line">            <span class="keyword">return</span> brand_list</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">raise</span> Exception(<span class="string">"请求失败"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">obtain_series</span><span class="params">(brand_list)</span>:</span></div><div class="line">    <span class="keyword">for</span> brand_info <span class="keyword">in</span> brand_list:</div><div class="line">        request_series = requests.get(series.format(brand_info[<span class="string">'id'</span>]))</div><div class="line">        <span class="keyword">if</span> request_series.status_code == <span class="number">200</span>:</div><div class="line">            request_series.close()</div><div class="line">            series_json = request_series.json()</div><div class="line">            <span class="keyword">if</span> series_json[<span class="string">'returncode'</span>] == <span class="number">0</span>:  <span class="comment"># 成功</span></div><div class="line">                factory_list = series_json[<span class="string">'result'</span>][<span class="string">'factoryitems'</span>]</div><div class="line">                conn = pymysql.connect(HOSTNAME, USERNAME, PASSWORD, DATABASE, charset=<span class="string">"utf8"</span>)</div><div class="line">                cur = conn.cursor()</div><div class="line">                args = []</div><div class="line">                series_count = <span class="number">0</span></div><div class="line">                <span class="keyword">for</span> factory_item <span class="keyword">in</span> factory_list:</div><div class="line">                    factory_id = factory_item[<span class="string">'id'</span>]</div><div class="line">                    factory_name = factory_item[<span class="string">'name'</span>]</div><div class="line">                    series_items = factory_item[<span class="string">'seriesitems'</span>]</div><div class="line">                    <span class="keyword">for</span> series_item <span class="keyword">in</span> series_items:</div><div class="line">                        series_count = series_count + <span class="number">1</span></div><div class="line">                        sub_arg = (brand_info[<span class="string">'id'</span>], factory_id, factory_name, series_item[<span class="string">'id'</span>], series_item[<span class="string">'name'</span>],</div><div class="line">                                   series_item[<span class="string">'seriesstate'</span>], series_item[<span class="string">'seriesorder'</span>])</div><div class="line">                        args.append(sub_arg)</div><div class="line"></div><div class="line">                rowcount = cur.executemany(<span class="string">'''INSERT INTO auto_home_car_series(brand_id, factory_id, `factory_name`, </span></div><div class="line"><span class="string">                                        `series_id`, `series_name`, `series_state`,`series_order`)</span></div><div class="line"><span class="string">                                          values(%s, %s, %s, %s, %s, %s, %s)'''</span>,args)</div><div class="line">                conn.commit()</div><div class="line">                print(<span class="string">f"插入车系:\n共<span class="subst">&#123;series_count&#125;</span>\n成功插入<span class="subst">&#123;rowcount&#125;</span>条记录\n插入失败<span class="subst">&#123;series_count - rowcount&#125;</span>条"</span>)</div><div class="line">                cur.close()</div><div class="line">                conn.close()</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">obtain_model</span><span class="params">()</span>:</span></div><div class="line">    conn = pymysql.connect(HOSTNAME, USERNAME, PASSWORD, DATABASE, charset=<span class="string">"utf8"</span>)</div><div class="line">    cur = conn.cursor()</div><div class="line">    cur.execute(<span class="string">"select series_id from auto_home_car_series"</span>)</div><div class="line">    series_list = cur.fetchall()</div><div class="line"></div><div class="line">    <span class="keyword">for</span> series <span class="keyword">in</span> series_list:</div><div class="line">        request_model = requests.get(model.format(series[<span class="number">0</span>]))</div><div class="line">        <span class="keyword">if</span> request_model.status_code == <span class="number">200</span>:</div><div class="line">            model_json = request_model.json()</div><div class="line">            request_model.close()</div><div class="line">            <span class="keyword">if</span> model_json[<span class="string">'returncode'</span>] == <span class="number">0</span>:  <span class="comment"># 成功</span></div><div class="line">                year_items = model_json[<span class="string">'result'</span>][<span class="string">'yearitems'</span>]</div><div class="line">                conn = pymysql.connect(HOSTNAME, USERNAME, PASSWORD, DATABASE, charset=<span class="string">"utf8"</span>)</div><div class="line">                cur = conn.cursor()</div><div class="line">                args = []</div><div class="line">                model_count = <span class="number">0</span></div><div class="line">                <span class="keyword">for</span> year_item <span class="keyword">in</span> year_items:</div><div class="line">                    <span class="keyword">for</span> spec_item <span class="keyword">in</span> year_item[<span class="string">'specitems'</span>]:</div><div class="line">                        model_count = model_count + <span class="number">1</span></div><div class="line">                        sub_args = (series[<span class="number">0</span>], year_item[<span class="string">'id'</span>], year_item[<span class="string">'name'</span>], spec_item[<span class="string">'id'</span>], spec_item[<span class="string">'name'</span>],</div><div class="line">                                    spec_item[<span class="string">'state'</span>], spec_item[<span class="string">'minprice'</span>], spec_item[<span class="string">'maxprice'</span>])</div><div class="line">                        args.append(sub_args)</div><div class="line"></div><div class="line">                rowcount = cur.executemany(<span class="string">'''INSERT INTO auto_home_car_model(</span></div><div class="line"><span class="string">                        `series_id`, `year_id`, `year_name`, `model_id`,</span></div><div class="line"><span class="string">                        `model_name`, `model_state`, `min_price`, `max_price`)</span></div><div class="line"><span class="string">                    values(%s, %s, %s, %s, %s, %s, %s, %s)'''</span>, args)</div><div class="line">                conn.commit()</div><div class="line">                print(<span class="string">f"插入车型:\n共<span class="subst">&#123;model_count&#125;</span>\n成功插入<span class="subst">&#123;rowcount&#125;</span>条记录\n插入失败<span class="subst">&#123;model_count - rowcount&#125;</span>条"</span>)</div><div class="line">                cur.close()</div><div class="line">                conn.close()</div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment">#brand_list = obtain_brand_info()</span></div><div class="line">    <span class="comment">#obtain_series(brand_list)</span></div><div class="line">    obtain_model()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="string">'__main__'</span> == __name__:</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最後更新時間：<time datetime="2017-11-08T10:13:35.477Z" itemprop="dateUpdated">2017-11-08 18:13:35</time>
+</span><br>
+
+
+        
+        转载请表明原文来处：<a href="/2017/11/08/使用python抓取汽车之家车型数据/" target="_blank" rel="external">http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/</a>
+        
+    </div>
+    <footer>
+        <a href="http://feynmanloo.github.io">
+            <img src="/img/avatar.jpg" alt="Feynman Loo">
+            Feynman Loo
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/汽车之家/">汽车之家</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/爬虫/">爬虫</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/&title=《使用python抓取汽车之家车型数据》 — Feynman's Blog&pic=http://feynmanloo.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/&title=《使用python抓取汽车之家车型数据》 — Feynman's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用python抓取汽车之家车型数据》 — Feynman's Blog&url=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/&via=http://feynmanloo.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/09/30/软件版本命名规范/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">软件版本命名规范</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+    <!--PC和WAP自适应版-->
+    <div id="SOHUCS"></div> 
+    <script type="text/javascript"> 
+        (function() {
+        var appid = 'cytbI0bQy';
+        var conf = 'prod_53ed85d1656c1af75ed404b8f1b6e4a2';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+        } else {
+            var loadJs = function(d, a) {
+                var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                var b = document.createElement("script");
+                b.setAttribute("type", "text/javascript");
+                b.setAttribute("charset", "UTF-8");
+                b.setAttribute("src", d);
+                if (typeof a === "function") {
+                    if (window.attachEvent) {
+                        b.onreadystatechange = function() {
+                            var e = b.readyState;
+                            if (e === "loaded" || e === "complete") {
+                                b.onreadystatechange = null;
+                                a()
+                            }
+                        }
+                    } else {
+                        b.onload = a
+                    }
+                }
+                c.appendChild(b)
+            };
+            loadJs("https://changyan.sohu.com/upload/changyan.js",
+            function() {
+                window.changyan.api.config({
+                    appid: appid,
+                    conf: conf
+                })
+            });
+        }
+    })();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>本部落格係採用<a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh_TW">創用 CC 姓名標示 4.0 國際 授權條款授權</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Feynman Loo &copy; 2015 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/&title=《使用python抓取汽车之家车型数据》 — Feynman's Blog&pic=http://feynmanloo.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/&title=《使用python抓取汽车之家车型数据》 — Feynman's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《使用python抓取汽车之家车型数据》 — Feynman's Blog&url=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/&via=http://feynmanloo.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://feynmanloo.github.io/2017/11/08/使用python抓取汽车之家车型数据/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACtUlEQVR42u3d0WojMQwF0Pz/T3dfF5Zp7pXskIUzTyGdTnwcsFRJ0Ncrvn7+uv595+n9pzuffvf3z/39ztWFh4eHt1h6u+inpz39VvJ+wis2Cw8PD+8aL1noqVM3ecLva0jWjIeHh/c9vPawzp/ZJvR4eHh4/wsvT5fzjcjTaDw8PLzv4eWpbYLcp8ub0jAeHh7ebV7eRfqe11f6e3h4eHjrrnp74CYpeB5UDqwWDw8P79pBmC99ljrP7t9sMR4eHt49Xr6U5LjPC7Jt8GgDCR4eHt4neZvDOmecarMVrS88PDy8Q7zNg2ZjWHtwkqDj4eHhfZKXJ8f7gu+9VB4PDw/vHi8/9PMjOC/RJq/z8sRjfw8PDw/vKK8tNOSn7mygal/wxcPDw7vNSw7WJAy0DapNCEkCwyuPG3h4eHgLXtJM2lDbwJMHjwOVaTw8PLwRry3LtiGkLR/MChOPQ1d4eHh4R3mnQkV+9M+KDnlYKhpgeHh4eCWvbcy3YWMzKDAbRCi+Qzw8PLw1Ly8NtGEgH72aBao3W4mHh4d3lLd/dDsO1Q4ZJO9EfzHg4eHhHeLlN21KtMlmze6MEms8PDy8j/DyJeZh41QDLA9LeHh4eDd4bTNp1s5vk+bZpr9mDDw8PLx5TXX4b+dm5YN2CKC9800bDA8PD2/Na1v7p36aN8lmSTkeHh7ebV77uCQJnpWJ23veUPHw8PCu8dpHtxsxK84mVzQfgYeHh3eI91Nebaa6LwFvvgY8PDy8G7z28N2Uemeb1abmRUsMDw8Pb8FLgsFslGq2QbMUfJhY4+Hh4S14m85RntrOUvZNeQIPDw/vG3jtIT4rws7KwcPJBTw8PLyP8JKPycPDfkQADw8P7/O8WbEgSabzkmuSpufDWHh4eHj3eLPBprOpcF6S2BQp8PDw8Na8PxYS2k8AmZszAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'BUG 出来啦！！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

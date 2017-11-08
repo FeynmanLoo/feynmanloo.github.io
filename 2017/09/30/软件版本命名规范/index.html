@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+<!-- Google Analytics -->
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-105310567-1', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+<!-- End Google Analytics -->
+
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    <title>软件版本命名规范 | Feynman&#39;s Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="版本号,规范">
+    <meta name="description" content="一个正规的软件产品少不了要有规范的命名，一个好的软件产品一定要有个规范的版本号，而在命名版本号时有一些约定俗成的规则，下面我来简单介绍下。 版本命名规范软件版本号有四部分组成，第一部分为主版本号，第二部分为次版本号，第三部分为修订版本号，第四部分为日期版本号加希腊字母版本号，希腊字母版本号共有五种，分别为base、alpha、beta 、RC 、 release">
+<meta name="keywords" content="版本号,规范">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件版本命名规范">
+<meta property="og:url" content="http://feynmanloo.github.io/2017/09/30/软件版本命名规范/index.html">
+<meta property="og:site_name" content="Feynman&#39;s Blog">
+<meta property="og:description" content="一个正规的软件产品少不了要有规范的命名，一个好的软件产品一定要有个规范的版本号，而在命名版本号时有一些约定俗成的规则，下面我来简单介绍下。 版本命名规范软件版本号有四部分组成，第一部分为主版本号，第二部分为次版本号，第三部分为修订版本号，第四部分为日期版本号加希腊字母版本号，希腊字母版本号共有五种，分别为base、alpha、beta 、RC 、 release">
+<meta property="og:image" content="http://file.car798.cn/Uploads/Images/2017/09/30/ba9b196e-11c1-437f-8eeb-676f5a9c7a5f.jpg">
+<meta property="og:image" content="http://file.car798.cn/Uploads/Images/2017/09/30/779bbacb-c83b-4beb-9c72-6f4404c92575.jpg">
+<meta property="og:image" content="http://file.car798.cn/Uploads/Images/2017/09/30/6408e772-8bd1-4ba1-9b7e-dfac16bbb097.jpg">
+<meta property="og:image" content="http://file.car798.cn/Uploads/Images/2017/09/30/90e81c9a-9a8c-440c-a117-0e97037562de.jpg">
+<meta property="og:image" content="http://file.car798.cn/Uploads/Images/2017/09/30/d8eae9e1-0825-4408-bdea-5e4a69be4da5.jpg">
+<meta property="og:updated_time" content="2017-09-30T07:10:22.380Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="软件版本命名规范">
+<meta name="twitter:description" content="一个正规的软件产品少不了要有规范的命名，一个好的软件产品一定要有个规范的版本号，而在命名版本号时有一些约定俗成的规则，下面我来简单介绍下。 版本命名规范软件版本号有四部分组成，第一部分为主版本号，第二部分为次版本号，第三部分为修订版本号，第四部分为日期版本号加希腊字母版本号，希腊字母版本号共有五种，分别为base、alpha、beta 、RC 、 release">
+<meta name="twitter:image" content="http://file.car798.cn/Uploads/Images/2017/09/30/ba9b196e-11c1-437f-8eeb-676f5a9c7a5f.jpg">
+    
+        <link rel="alternate" type="application/atom+xml" title="Feynman&#39;s Blog" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide" >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Feynman Loo</h5>
+          <a href="mailto:feynman0919@gmail.com" title="feynman0919@gmail.com" class="mail">feynman0919@gmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                归档
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/FeynmanLoo" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/ysweb" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">软件版本命名规范</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="搜尋">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">软件版本命名规范</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2017-09-30T04:05:17.000Z" itemprop="datePublished" class="page-time">
+  2017-09-30
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#版本命名规范"><span class="post-toc-number">1.</span> <span class="post-toc-text">版本命名规范</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#软件版本阶段说明"><span class="post-toc-number">2.</span> <span class="post-toc-text">软件版本阶段说明</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#版本号修改规则"><span class="post-toc-number">3.</span> <span class="post-toc-text">版本号修改规则</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#版本发布周期"><span class="post-toc-number">4.</span> <span class="post-toc-text">版本发布周期</span></a></li><li class="post-toc-item post-toc-level-4"><a class="post-toc-link" href="#版本号修改举例说明"><span class="post-toc-number">5.</span> <span class="post-toc-text">版本号修改举例说明</span></a></li></ol>
+        </nav>
+    </aside>
+    
+<article id="post-软件版本命名规范"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">软件版本命名规范</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2017-09-30 12:05:17" datetime="2017-09-30T04:05:17.000Z"  itemprop="datePublished">2017-09-30</time>
+
+            
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>一个正规的软件产品少不了要有规范的命名，一个好的软件产品一定要有个规范的版本号，而在命名版本号时有一些约定俗成的规则，下面我来简单介绍下。</p>
+<h4 id="版本命名规范"><a href="#版本命名规范" class="headerlink" title="版本命名规范"></a>版本命名规范</h4><p>软件版本号有四部分组成，第一部分为主版本号，第二部分为次版本号，第三部分为修订版<br>本号，第四部分为日期版本号加希腊字母版本号，希腊字母版本号共有五种，分别为base、alpha、beta 、RC 、 release</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/ba9b196e-11c1-437f-8eeb-676f5a9c7a5f.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="软件版本阶段说明"><a href="#软件版本阶段说明" class="headerlink" title="软件版本阶段说明"></a>软件版本阶段说明</h4><ul>
+<li>Base：此版本表示该软件仅仅是一个假页面链接，通常包括所有的功能和页面布局，但是页面中的功能都没有做完整的实现，只是做为整体网站的一个基础架构。</li>
+<li>Alpha ：软件的初级版本，表示该软件在此阶段以实现软件功能为主，通常只在软件开发者内部交流，一般而言，该版本软件的Bug较多，需要继续修改，是测试版本。测试    人员提交Bug经开发人员修改确认之后，发布到测试网址让测试人员测试，此时可将软件版本标注为alpha版。</li>
+<li>Beta ：该版本相对于Alpha 版已经有了很大的进步，消除了严重错误，但还需要经过多次测试来进一步消除，此版本主要的修改对象是软件的UI。修改的的Bug 经测试人员测试确认后可发布到外网上，此时可将软件版本标注为 beta版。<br>RC ：该版本已经相当成熟了，基本上不存在导致错误的Bug，与即将发行的正式版本相差 无几。<br>Release：该版本意味“最终版本”，在前面版本的一系列测试版之后，终归会有一个正式的版本，是最终交付用户使用的一个版本。该版本有时也称标准版。</li>
+</ul>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/779bbacb-c83b-4beb-9c72-6f4404c92575.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="版本号修改规则"><a href="#版本号修改规则" class="headerlink" title="版本号修改规则"></a>版本号修改规则</h4><ol>
+<li>主版本号：当功能模块有较大的变动，比如增加模块或是整体架构发生变化。此版本号由项目决定是否修改。</li>
+<li>次版本号：相对于主版本号而言，次版本号的升级对应的只是局部的变动，但该局部的变动造成程序和以前版本不能兼容，或者对该程序以前的协作关系产生了破坏，或者 是功能上有大的改进或增强。此版本号由项目决定是否修改。</li>
+<li>修订版本号：一般是Bug 的修复或是一些小的变动或是一些功能的扩充，要经常发布修订版，修复一个严重 Bug 即可发布一个修订版。此版本号由项目经理    决定是否修改。</li>
+<li>日期版本号：用于记录修改项目的当前日期，每天对项目的修改都需要更改日期版本  号。此版本号由开发人员决定是否修改。</li>
+<li>希腊字母版本号：此版本号用于标注当前版本的软件处于哪个开发阶段，当软件进入  到另一个阶段时需要修改此版本号。此版本号由项目决定是否修改。</li>
+</ol>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/6408e772-8bd1-4ba1-9b7e-dfac16bbb097.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="版本发布周期"><a href="#版本发布周期" class="headerlink" title="版本发布周期"></a>版本发布周期</h4><p>非紧急情况：首先由测试人员测试并提交Bug，其次开发人员会尽量在当天修复Bug并在第二天发布该版本的alpha版，然后由测试人员测试验证关闭Bug之后在第三天会发布该版本的 beta 版。</p>
+<p>紧急情况：如果Bug比较紧急可跳过一般流程，由开发人员尽快修复Bug，测试确认之后直接发布该版本的 beta版。</p>
+<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/90e81c9a-9a8c-440c-a117-0e97037562de.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+<h4 id="版本号修改举例说明"><a href="#版本号修改举例说明" class="headerlink" title="版本号修改举例说明"></a>版本号修改举例说明</h4><p>如此时版本号为：1.0.0.0321_alpha ，此时为内部测试阶段</p>
+<ol>
+<li>开发人员修复了测试人员提交的bug并经测试人员测试验证关闭bug之后，发布到外网时，此时就进入了软件的下一个阶段，版本号可改为：1.0.0.0321_beta ，如当前日期跟上一个版本号的日期不一样，版本号可改为：1.0.0.0322_beta。</li>
+<li>如果修复了一些重大Bug 并按照流程发布到外网时就可发布一个修订版，如1.0.1.0322_beta，日期为发布的当前日期。</li>
+<li>如果对软件进行了一些功能上的改进或增强，进行了一些局部变动的时候要修改次版本号，如：1.1.0.0322_beta（上一级有变动时，下级要归零）。</li>
+<li>当功能模块有较大变动，增加模块或整体架构发生变化时要修改主版本号，如新增加了退款功能，则版本号要改为：2.0.0.0322_beta 。<figure class="image-bubble">
+                <div class="img-lightbox">
+                    <div class="overlay"></div>
+                    <img src="http://file.car798.cn/Uploads/Images/2017/09/30/d8eae9e1-0825-4408-bdea-5e4a69be4da5.jpg" alt="" title="">
+                </div>
+                <div class="image-caption"></div>
+            </figure>
+</li>
+</ol>
+<p>英文原文：<a href="https://jingyan.baidu.com/article/8cdccae9659f5c315413cde6.html" target="_blank" rel="external">https://jingyan.baidu.com/article/8cdccae9659f5c315413cde6.html</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最後更新時間：<time datetime="2017-09-30T07:10:22.380Z" itemprop="dateUpdated">2017-09-30 15:10:22</time>
+</span><br>
+
+
+        
+        转载请表明原文来处：<a href="/2017/09/30/软件版本命名规范/" target="_blank" rel="external">http://feynmanloo.github.io/2017/09/30/软件版本命名规范/</a>
+        
+    </div>
+    <footer>
+        <a href="http://feynmanloo.github.io">
+            <img src="/img/avatar.jpg" alt="Feynman Loo">
+            Feynman Loo
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/版本号/">版本号</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/规范/">规范</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/&title=《软件版本命名规范》 — Feynman's Blog&pic=http://feynmanloo.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/&title=《软件版本命名规范》 — Feynman's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《软件版本命名规范》 — Feynman's Blog&url=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/&via=http://feynmanloo.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2017/11/08/使用python抓取汽车之家车型数据/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">使用python抓取汽车之家车型数据</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2017/09/18/开源许可证GPL、BSD、MIT、Mozilla、Apache和LGPL的区别/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">开源许可证GPL、BSD、MIT、Mozilla、Apache和LGPL的区别</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+    <!--PC和WAP自适应版-->
+    <div id="SOHUCS"></div> 
+    <script type="text/javascript"> 
+        (function() {
+        var appid = 'cytbI0bQy';
+        var conf = 'prod_53ed85d1656c1af75ed404b8f1b6e4a2';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>');
+        } else {
+            var loadJs = function(d, a) {
+                var c = document.getElementsByTagName("head")[0] || document.head || document.documentElement;
+                var b = document.createElement("script");
+                b.setAttribute("type", "text/javascript");
+                b.setAttribute("charset", "UTF-8");
+                b.setAttribute("src", d);
+                if (typeof a === "function") {
+                    if (window.attachEvent) {
+                        b.onreadystatechange = function() {
+                            var e = b.readyState;
+                            if (e === "loaded" || e === "complete") {
+                                b.onreadystatechange = null;
+                                a()
+                            }
+                        }
+                    } else {
+                        b.onload = a
+                    }
+                }
+                c.appendChild(b)
+            };
+            loadJs("https://changyan.sohu.com/upload/changyan.js",
+            function() {
+                window.changyan.api.config({
+                    appid: appid,
+                    conf: conf
+                })
+            });
+        }
+    })();
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check"
+                data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>本部落格係採用<a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.zh_TW">創用 CC 姓名標示 4.0 國際 授權條款授權</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Feynman Loo &copy; 2015 - 2017</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/&title=《软件版本命名规范》 — Feynman's Blog&pic=http://feynmanloo.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/&title=《软件版本命名规范》 — Feynman's Blog&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《软件版本命名规范》 — Feynman's Blog&url=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/&via=http://feynmanloo.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=http://feynmanloo.github.io/2017/09/30/软件版本命名规范/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACrklEQVR42u3ay24jMQwEQP//T3uvC2Rjd5OS4QVqTkEeMyoFGMpNPh7x9fzr+vn9n7+zuV7f7XHjwsPDw1ssPX/Ya3z7db62fM14eHh4t3m/3botAMl9kjvn2/fGgoeHh/cFvFlJuFEY8PDw8P4vXvLT2cE6IeHh4eF9Ay8JI/K/SsCvv59s1uGsBQ8PD69LDKIu0vd8faW/h4eHh7fuqifNp3xTzo4vRKvFw8PDu/UirOPUWXAwa6e1x2U8PDy8z/Bmr+A26t2EuacGC/Dw8PD2vPbxm4bW66e8XvqqAODh4eEd5eWtpmRx7dLzQYRZxIyHh4d3m5cHtbMD92wT24JR7AEeHh7egtfeut2gNvzNYdG24uHh4R3ltR/128ZVHlu0ZSDaMjw8PLwLvLwBtgkO8vLQjna1R3k8PDy8U7xNKysvGPkd8uAjilHw8PDwjvJmkcGsSDzjq93oN2EEHh4e3gVeO63UvsTzptd+U6Jqg4eHh3eZ1w5Rzdpaq+zkNxEeHh7ex3mz13p7BJ9FFav+Hh4eHt5RXn4sHgYEo2GC4T3x8PDwLvBmseypxc1+cxOX4OHh4Z3lta/7/JjbPuXsaBceHh7eWV7++PbovBnD2pcQPDw8vHu8WWB6alygPY7nMXH9/8TDw8MreXkYOmvnt+MFbeka5it4eHh4Rw/Wr6OH2SF4n5fkK8HDw8P7DC8vA5thqTb42BQbPDw8vBu8Z3nNFj07QM/KzD/GVfHw8PCO8vZVJQ8L8mP6aiB1FpTg4eHhlby2GMyGA2blZzbyhYeHh/cZ3qwx1ga4+bP2DTY8PDy87+FtAoIWnB/lh/09PDw8vA/y2jHWJJiYHc3frAcPDw/vGm8WDST4duygTaDfIPHw8PAu8NqP90n0kIets6Pz4QsPDw8vvf4A3dPFOtCOnA4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = 'BUG 出来啦！！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>
